@@ -1,13 +1,40 @@
 <?php
+
+
 namespace App\Http\Controllers;
-use App\Models\Aluno;
+
 class AlunoController extends Controller
 {
+    //public function index()
+    //{
+    //return 'Lista de alunos';
+    //}
+    public function mostrar($id)
+    {
+        return 'Aluno: ' . $id;
+    }
+    //public function index()
+    //{
+    //return view('alunos');
+    //}
+
+    //public function index()
+    //{
+        //$aluno = 'João';
+        //return view('alunos', [
+        //    'aluno' => $aluno
+        //]);
+    //}
+
     public function index()
     {
-        $alunos = Aluno::orderBy('nome')->get();
-        return view('alunos.index', [
-            'alunos' => $alunos,
+        $alunos = [
+            'Ana',
+            'Bruno',
+            'Carlos'
+        ];
+        return view('alunos', [
+            'alunos' => $alunos
         ]);
     }
 }
