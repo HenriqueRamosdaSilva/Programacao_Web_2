@@ -8,8 +8,20 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
-    public function index()
+    public function index(Request $request) 
     {
+        $query = Pedido::with('cliente');
+
+        if ($request->filled('cliente_id')) {
+            $query->where('cliente_id', $request->cliente_id);
+        }
+
+        $pedidos = $query->orderBy('data', 'desc')->get();
+
+        $clientes = Cliente::orderBy('nome')->get();
+
+        return view('pedidos.index', compact('pedidos', 'clientes'));
+
         $pedidos = Pedido::with('cliente')
             ->orderBy('data', 'desc')
             ->get();

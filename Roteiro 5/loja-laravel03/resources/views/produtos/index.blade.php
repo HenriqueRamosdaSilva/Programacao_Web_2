@@ -1,46 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-    <title>Produtos</title>
+    <title>Lista de Produtos</title>
 </head>
-
 <body>
     <h1>Produtos</h1>
-    @if(session('success'))
-    <p>{{ session('success') }}</p>
-    @endif
-    <p>
-        <a href="{{ route('produtos.create') }}">Novo produto</a>
-    </p>
-    <form action="{{ route('produtos.index') }}" method="GET">
-        <input type="text" name="busca" placeholder="Buscar por nome" value="{{ $busca ?? '' }}">
-        <button type="submit">Buscar</button>
-        @if($busca !== '')
-        <a href="{{ route('produtos.index') }}">Limpar busca</a>
-        @endif
-    </form>
 
-    @forelse($produtos as $produto)
-    <article>
-        <h2>{{ $produto->nome }}</h2>
-        <p>Preço: R$ {{ $produto->preco }}</p>
-        <p>Estoque: {{ $produto->quantidade }}</p>
-        <p>Status: {{ $produto->ativo ? 'Ativo' : 'Inativo' }}</p>
-
-        <a href="{{ route('produtos.show', $produto) }}">Ver detalhes</a> |
-        <!-- Link de edição adicionado aqui -->
-        <a href="{{ route('produtos.edit', $produto) }}">Editar produto</a>
-    </article>
-    <hr>
+    @forelse ($produtos as $produto)
+        <article>
+            <p><strong>Produto:</strong> {{ $produto->nome }}</p>
+            <p><strong>Preço:</strong> R$ {{ $produto->preco }}</p>
+            <!-- Aqui exibimos o NOME da categoria através do relacionamento -->
+            <p><strong>Categoria:</strong> {{ $produto->categoria->nome }}</p>
+        </article>
+        <hr>
     @empty
-    @if($busca !== '')
-    <p>Nenhum produto encontrado para "{{ $busca }}".</p>
-    @else
-    <p>Nenhum produto cadastrado.</p>
-    @endif
+        <p>Nenhum produto cadastrado.</p>
     @endforelse
 </body>
-
 </html>

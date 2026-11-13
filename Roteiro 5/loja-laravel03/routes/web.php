@@ -19,3 +19,5 @@ Route::get('/pedidos/criar', [PedidoController::class, 'create'])
 Route::post('/pedidos', [PedidoController::class, 'store'])
     ->name('pedidos.store');
 Route::get('/clientes/{cliente}/pedidos', [ClienteController::class, 'pedidos'])->name('clientes.pedidos');
+Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.index');

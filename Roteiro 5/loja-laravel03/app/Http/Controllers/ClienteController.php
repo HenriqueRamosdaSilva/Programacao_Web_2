@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    public function index()
+    {
+        
+        $clientes = Cliente::withCount('pedidos')->get();
+
+        return view('clientes.index', compact('clientes'));
+    }
+
     public function pedidos(Cliente $cliente)
     {
        
