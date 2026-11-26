@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Produto extends Model
 {
-    protected $fillable = ['categoria_id', 'nome', 'preco'];
+    protected $fillable = ['categoria_id', 'nome', 'preco', 'ativo'];
 
-    // Convertendo o preço automaticamente para decimal (opcional, igual foi feito em Pedido)
     protected function casts(): array
     {
         return [
             'preco' => 'decimal:2',
+            'ativo' => 'boolean',
         ];
     }
 
@@ -22,18 +22,3 @@ class Produto extends Model
         return $this->belongsTo(Categoria::class);
     }
 }
-    //protected $fillable = [
-        //'nome',
-        //'descricao',
-        //'preco',
-        //'quantidade',
-        //'ativo',
-    //];
-    //protected function casts(): array
-    //{
-    //    return [
-    //        'preco' => 'decimal:2',
-    //        'quantidade' => 'integer',
-    //        'ativo' => 'boolean',
-    //    ];
-    //}

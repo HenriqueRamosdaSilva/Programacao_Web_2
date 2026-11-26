@@ -7,10 +7,31 @@ use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cursos = Curso::orderBy('nome')->get();
-        return view('cursos.index', compact('cursos'));
+        $termo = trim((string) $request->input('busca', ''));
+        $cargaMinima = $request->input('carga_minima');
+
+        $consulta = Curso::query();
+
+        if ($termo !== '') {
+            $consulta->where('nome', 'ilike', '%' . $termo . '%');
+        }
+
+        if ($cargaMinima !== null && $cargaMinima !== '' && is_numeric($cargaMinima)) {
+            $consulta->where('carga_horaria', '>=', (int) $cargaMinima);
+        }
+
+        $cursos = $consulta
+            ->orderBy('nome')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('cursos.index', [
+            'cursos' => $cursos,
+            'termo' => $termo,
+            'cargaMinima' => $cargaMinima,
+        ]);
     }
 
     public function create()
